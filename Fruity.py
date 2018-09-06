@@ -7,9 +7,10 @@ Created on Sun Sep  2 15:41:03 2018
 """
 
 import re
+pattern=re.compile('\d\d\d')
 import random
 from openpyxl import load_workbook
-pattern=re.compile('\d\d\d')
+
 
 
 def intro():
@@ -69,7 +70,9 @@ instruction="""
               """
 
 def instructions():
-    #Asks player whether they want to read the instructions or not.
+    """
+    Prints the instructions if player responds 'y'
+    """
 
 
     response=input("Would you like to read the instructions?(y/n)")
@@ -87,7 +90,7 @@ def instructions():
 def chooseDiff():
     """
     Asks player to set difficulty and
-    sets number of guesses accordingly.
+    returns the maximum number of guesses.
     """
     diff=input("Please choose your difficulty level (e/m/h)")
     if diff=="e":
@@ -118,7 +121,7 @@ class secretNum(str):
         self.value=''
 
     def getValue(self):
-        #Sets a random value to the secretNum object and returns it.
+        #Sets a random value to the secretNum object and returns the value.
         numbers =list(range(10))
         random.shuffle(numbers)
         for i in range(3):
@@ -129,7 +132,7 @@ class secretNum(str):
 
 class hint(str):
     """
-    Used when the user asks for help.
+    Used when the user asks for hint.
     """
 
     def __init__(self):
@@ -168,7 +171,7 @@ class fact(str):
 
     def getFact(self):
         """
-        Gets a random fact from Facts.xlsx
+        Gets a random fact from Facts.xlsx and returns it.
         """
         book=load_workbook('Facts.xlsx')
         sheet=book['Sheet1']
@@ -238,6 +241,7 @@ class clue(list):
 def playAgain():
     """
     Asks the user whether they want to play again.
+    Returns a boolean.
     """
 
     while True:
@@ -272,10 +276,10 @@ while True:
         if guess==secretNumber:
             break
         
-
     if numGuess==maxGuess:
         print("Sorry, you ran out of guesses.")
         print("The secret number was", secretNumber)
+   
     play=playAgain()
     if not play:
         break
