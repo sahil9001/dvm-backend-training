@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Sun Sep  4 15:41:03 2018
+Created on Sun Sep  4 15:41:03 2018c
 
 @author: shivanshu
 """
@@ -71,17 +71,19 @@ instruction = """
 
 def instructions():
     # Asks player whether they want to read the instructions or not.
+    while True:
+        print("")
+        response = input("Would you like to read the instructions?(y/n)")
+        if response == 'y' or response == 'yes':
+            print(instruction)
+            break
 
-    response = input("Would you like to read the instructions?(y/n)")
-    if response == 'y' or response == 'yes':
-        print(instruction)
+        elif response == 'n' or response == 'no':
+            break
 
-    elif response == 'n' or response == 'no':
-        pass
+        else:
+            print("Please provide a valid response")
 
-    else:
-        print("Please provide a valid response")
-        instructions()
 
 
 def chooseDiff():
@@ -89,25 +91,27 @@ def chooseDiff():
     Asks player to set difficulty and
     sets number of guesses accordingly.
     """
-    diff = input("Please choose your difficulty level (e/m/h)")
-    if diff == "e":
-        maxGuess = 10
+    while True:
         print("")
-        print('You have 10 guesses.')
-        return maxGuess
-    elif diff == "m":
-        maxGuess = 8
-        print("")
-        print('You have 8 guesses.')
-        return maxGuess
-    elif diff == "h":
-        maxGuess = 6
-        print("")
-        print('You have 6 guesses.')
-        return maxGuess
-    else:
-        print("Please provide a valid response.")
-        return chooseDiff()
+        diff = input("Please choose your difficulty level (e/m/h)")
+        if diff == "e":
+            maxGuess = 10
+            print("")
+            print('You have 10 guesses.')
+            return maxGuess
+        elif diff == "m":
+            maxGuess = 8
+            print("")
+            print('You have 8 guesses.')
+            return maxGuess
+        elif diff == "h":
+            maxGuess = 6
+            print("")
+            print('You have 6 guesses.')
+            return maxGuess
+        else:
+            print("Please provide a valid response.")
+
 
 
 class secretNum(str):
@@ -150,10 +154,10 @@ class hint(str):
         elif secretNumber % 2 == 0:
             return self.divisible + " 2"
 
-        elif secretNumber >= 0 and secretNumber < 301:
+        elif 0 <= secretNumber < 301:
             return self.between + " 0 and 300"
 
-        elif secretNumber >= 301 and secretNumber < 601:
+        elif 301 <= secretNumber < 601:
             return self.between + " 301 and 600"
 
         else:
@@ -174,7 +178,7 @@ class fact(str):
 
         for column in sheet.columns:
             self.value = column[x].value
-            return (self.value)
+            return self.value
 
 
 class clue(list):
@@ -278,6 +282,7 @@ def playAgain():
     """
 
     while True:
+        print("")
         response = input("Do you want to play again?(y/n)")
         if response == 'y' or response == 'yes':
             return True
@@ -302,6 +307,7 @@ while True:
     print("")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("I have thought up a number. You have", str(maxGuess), "guesses to get it.")
+
     while numGuess < maxGuess:
         guess = input("Guess Number-" + str(numGuess + 1) + ":")
 
@@ -312,10 +318,10 @@ while True:
 
     if numGuess == maxGuess:
         print("Sorry, you ran out of guesses.")
-        print("The secret number was", secretNumber)
+        print("The secret number was", secretNumber+".")
 
     score = getScore(numGuess, clue1.value)
-    print("Your score is " + str(score))
+    print("Your score is " + str(score)+".")
     print("")
 
     play = playAgain()
