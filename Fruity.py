@@ -10,7 +10,7 @@ import re
 import random
 from openpyxl import load_workbook
 
-pattern = re.compile('\d\d\d')
+
 
 
 def intro():
@@ -60,14 +60,13 @@ instruction = """
               just have to type 'fact' and the computer will serve up
               a sweet and juicy fact about fruits right onto your screen.
 
-              Also, you can type 'instructions' anytime you want to see
+              Also, you can type 'instructions' any time you want to see
               these instructions again.
 
               That's all you need to know to play this game.
               Happy Guessing!
 
               """
-
 
 def instructions():
     # Asks player whether they want to read the instructions or not.
@@ -85,11 +84,10 @@ def instructions():
             print("Please provide a valid response")
 
 
-
 def chooseDiff():
     """
-    Asks player to set difficulty and
-    sets number of guesses accordingly.
+    Asks player to set difficulty.
+    Returns maximum nuber of guesses (int).
     """
     while True:
         print("")
@@ -114,14 +112,18 @@ def chooseDiff():
 
 
 
-class secretNum(str):
+class secretNum():
     # The secret number is an object of type secretNum.
 
     def __init__(self):
-        self.value = ''
+        self.value =''
+
 
     def getValue(self):
-        # Sets a random value to the secretNum object and returns it.
+        """
+        Sets a random value to the secretNum object and returns it
+        as a string
+        """
         numbers = list(range(10))
         random.shuffle(numbers)
         for i in range(3):
@@ -129,11 +131,11 @@ class secretNum(str):
         return self.value
 
 
-class hint(str):
-    """
-    Used when the user asks for help.
-    """
 
+class hint():
+    """
+    Used when the user asks for a hint.
+    """
     def __init__(self):
 
         self.divisible = "The number is divisible by"
@@ -143,6 +145,7 @@ class hint(str):
         """
         Returns either the divisibility of the secret number by 2, 3 or 5
         or the range in which the secret number lies.
+        Returns type str.
         """
         secretNumber = int(secretNumber)
         if secretNumber % 5 == 0:
@@ -164,19 +167,20 @@ class hint(str):
             return self.between + " 601 and 999"
 
 
-class fact(str):
+class fact():
     def __init__(self):
         self.value = ''
+        self.book = load_workbook('Facts.xlsx')
+        self.sheet = self.book['Sheet1']
 
     def getFact(self):
         """
         Gets a random fact from Facts.xlsx
         """
-        book = load_workbook('Facts.xlsx')
-        sheet = book['Sheet1']
+
         x = random.randint(0, 29)
 
-        for column in sheet.columns:
+        for column in self.sheet.columns:
             self.value = column[x].value
             return self.value
 
@@ -184,7 +188,7 @@ class fact(str):
 class clue(list):
 
     def __init__(self):
-        self.value = []
+        list.__init__(self)
 
     def getClues(self, guess, secretNumber):
         """
@@ -217,62 +221,79 @@ class clue(list):
             return (instruction)
 
         else:
-
+            pattern = re.compile('\d\d\d')
             if not pattern.fullmatch(guess):
-                return "Please provide a valid response."
+                return "Guess should be a 3 digit number with no repeating digits."
 
-            self.value = []
+            else:
+                for i in guess:
+                    if guess.count(i)>1:
+                        return "Guess should not have repeating digits."
 
+
+            self.clear()
             for i in range(3):
 
                 if guess[i] == secretNumber[i]:
-                    self.value.append("Bananas!")
+                    self.append("Bananas!")
 
                 elif guess[i] in secretNumber:
-                    self.value.append("Mangoes!")
+                    self.append("Mangoes!")
 
-            if len(self.value) == 0:
-                self.value.append("Pineapples!")
+            if len(self) == 0:
+                self.append("Pineapples!")
 
             global numGuess
             numGuess += 1
 
-            self.value.sort()
-            return ' '.join(self.value)
+            self.sort()
+            return ' '.join(self)
 
 
-def getScore(numGuess, clues):
-    """
-    Returns a score on the basis of how close to the
-    number the player got and how many guesses it took.
+class score():
 
-    numGuess: an integer
-    clues: an array
-    returns: an integer
-    """
-    score = 800
-    score -= numGuess * 100
+    def __init__(self):
+        self.value = 800
 
-    global hintCount
-    if hintCount == 1:
-        score -= 100
 
-    for clue in clues:
+    def getScore(self, numGuess, clues):
+        """
+        Returns a score on the basis of how close to the
+        number the player got and how many guesses it took.
 
-        if clue == "Pineapples!":
-            score -= 200
-            return score
+        numGuess: an integer
+        clues: an array
+        returns: an integer
+        """
 
-        if clue == "Mangoes!":
-            score += 50
+        self.value -= numGuess * 100
+        #-100 for every wrong guess.
 
-        if clue == "Bananas!":
-            score += 100
+        global hintCount
+        if hintCount == 1:
+            self.value -= 150
+            #-150 for taking a hint.
 
         if guess == secretNumber:
-            score += 200
+            self.value += 300
+            #+300 for getting it right.
 
-    return score
+
+        else:
+            #Partial points.
+            for clue in clues:
+
+                if clue == "Pineapples!":
+                    self.value -= 200  #-200 for not getting anything right.
+                    return self.value
+
+                if clue == "Mangoes!":
+                    self.value += 50   #+50 for each correct digit wrong position.
+
+                if clue == "Bananas!":
+                    self.value += 100  #+100 for each correct digit correct position.
+
+        return self.value
 
 
 def playAgain():
@@ -301,6 +322,7 @@ while True:
     numGuess = 0
     hintCount = 0
     clue1 = clue()
+    score1 = score()
     secretNum1 = secretNum()
     secretNumber = secretNum1.getValue()
 
@@ -320,10 +342,10 @@ while True:
         print("Sorry, you ran out of guesses.")
         print("The secret number was", secretNumber+".")
 
-    score = getScore(numGuess, clue1.value)
-    print("Your score is " + str(score)+".")
+
+    scoreValue = score1.getScore(numGuess, clue1)
+    print("Your score is " + str(scoreValue)+".")
     print("")
 
-    play = playAgain()
-    if not play:
+    if not playAgain():
         break
