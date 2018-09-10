@@ -87,7 +87,7 @@ def instructions():
 def chooseDiff():
     """
     Asks player to set difficulty.
-    Returns maximum nuber of guesses (int).
+    Returns maximum number of guesses (type = int).
     """
     while True:
         print("")
@@ -169,7 +169,8 @@ class hint():
 
 class fact():
     def __init__(self):
-        self.value = ''
+
+        #Loading the file and the sheet.
         self.book = load_workbook('Facts.xlsx')
         self.sheet = self.book['Sheet1']
 
@@ -177,7 +178,6 @@ class fact():
         """
         Gets a random fact from Facts.xlsx
         """
-
         x = random.randint(0, 29)
 
         for column in self.sheet.columns:
@@ -192,10 +192,10 @@ class clue(list):
 
     def getClues(self, guess, secretNumber):
         """
-        Returns the clues if the user guesses a number.
+        Returns the clues(type = str)if the user guesses a number.
         Calls getHint() if the user asks for a hint.
         Calls getFact() if the user asks for a fact.
-
+        Prints the instructions if user asks for it.
         """
 
         if guess == secretNumber:
@@ -288,10 +288,10 @@ class score():
                     return self.value
 
                 if clue == "Mangoes!":
-                    self.value += 50   #+50 for each correct digit wrong position.
+                    self.value += 50   #+50 for each correct digit in a wrong position.
 
                 if clue == "Bananas!":
-                    self.value += 100  #+100 for each correct digit correct position.
+                    self.value += 100  #+100 for each correct digit in the correct position.
 
         return self.value
 
@@ -324,7 +324,7 @@ while True:
     clue1 = clue()
     score1 = score()
     secretNum1 = secretNum()
-    secretNumber = secretNum1.getValue()
+    secretNumber = secretNum1.getValue()  #Value assigned to the secret number.
 
     print("")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
@@ -333,8 +333,9 @@ while True:
     while numGuess < maxGuess:
         guess = input("Guess Number-" + str(numGuess + 1) + ":")
 
-        print(clue1.getClues(guess, secretNumber))
+        print(clue1.getClues(guess, secretNumber)) #Print the clues.
         print("")
+
         if guess == secretNumber:
             break
 
@@ -342,8 +343,7 @@ while True:
         print("Sorry, you ran out of guesses.")
         print("The secret number was", secretNumber+".")
 
-
-    scoreValue = score1.getScore(numGuess, clue1)
+    scoreValue = score1.getScore(numGuess, clue1)  #Score assigned.
     print("Your score is " + str(scoreValue)+".")
     print("")
 
