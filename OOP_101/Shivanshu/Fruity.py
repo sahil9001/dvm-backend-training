@@ -69,7 +69,9 @@ instruction = """
               """
 
 def instructions():
-    # Asks player whether they want to read the instructions or not.
+    """
+    Asks player whether they want to read the instructions or not.
+    """
     while True:
         print("")
         response = input("Would you like to read the instructions?(y/n)")
@@ -92,24 +94,27 @@ def chooseDiff():
     while True:
         print("")
         diff = input("Please choose your difficulty level (e/m/h)")
+
         if diff == "e":
             maxGuess = 10
             print("")
             print('You have 10 guesses.')
             return maxGuess
+
         elif diff == "m":
             maxGuess = 8
             print("")
             print('You have 8 guesses.')
             return maxGuess
+
         elif diff == "h":
             maxGuess = 6
             print("")
             print('You have 6 guesses.')
             return maxGuess
+
         else:
             print("Please provide a valid response.")
-
 
 
 class secretNum():
@@ -117,7 +122,6 @@ class secretNum():
 
     def __init__(self):
         self.value =''
-
 
     def getValue(self):
         """
@@ -129,7 +133,6 @@ class secretNum():
         for i in range(3):
             self.value += str(numbers[i])
         return self.value
-
 
 
 class hint():
@@ -204,13 +207,12 @@ class clue(list):
         elif guess == "hint":
 
             global hintCount
-            if hintCount == 0:
+            if hintCount == 0: #To keep track of hints taken.
                 hint1 = hint()
                 hintCount += 1
                 return hint1.getHint(secretNumber)
 
             elif hintCount == 1:
-
                 return "You can have only one hint per game you greedy human."
 
         elif guess == "fact":
@@ -221,6 +223,7 @@ class clue(list):
             return (instruction)
 
         else:
+            #Check if input is valid.
             pattern = re.compile('\d\d\d')
             if not pattern.fullmatch(guess):
                 return "Guess should be a 3 digit number with no repeating digits."
@@ -230,18 +233,17 @@ class clue(list):
                     if guess.count(i)>1:
                         return "Guess should not have repeating digits."
 
-
             self.clear()
             for i in range(3):
 
                 if guess[i] == secretNumber[i]:
-                    self.append("Bananas!")
+                    self.append("Bananas!") #Correct digit in correct place.
 
                 elif guess[i] in secretNumber:
-                    self.append("Mangoes!")
+                    self.append("Mangoes!") #Correct digit in wrong place.
 
             if len(self) == 0:
-                self.append("Pineapples!")
+                self.append("Pineapples!") #No correct digit.
 
             global numGuess
             numGuess += 1
@@ -254,7 +256,6 @@ class score():
 
     def __init__(self):
         self.value = 800
-
 
     def getScore(self, numGuess, clues):
         """
@@ -278,7 +279,6 @@ class score():
             self.value += 300
             #+300 for getting it right.
 
-
         else:
             #Partial points.
             for clue in clues:
@@ -301,7 +301,6 @@ def playAgain():
     Asks the user whether they want to play again.
     Returns a boolean.
     """
-
     while True:
         print("")
         response = input("Do you want to play again?(y/n)")
@@ -331,7 +330,7 @@ while True:
     print("I have thought up a number. You have", str(maxGuess), "guesses to get it.")
 
     while numGuess < maxGuess:
-        guess = input("Guess Number-" + str(numGuess + 1) + ":")
+        guess = input("Guess Number-" + str(numGuess + 1) + ":") #User's input.
 
         print(clue1.getClues(guess, secretNumber)) #Print the clues.
         print("")

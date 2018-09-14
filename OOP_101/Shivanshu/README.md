@@ -1,6 +1,6 @@
 # DVM Assignment : OOP
 
-**Fruity: The Game ** is the game that I have come up with for this assignment. It a logic based number-guessing game in which you have to use the hints and clues given to you to find the value of a particular three-digit number.
+**Fruity: The Game** is the game that I have come up with for this assignment. It is a logic based number-guessing game in which you have to use the hints and clues given to you to find the value of a particular three-digit number.
 
 ### Requirements:
 
