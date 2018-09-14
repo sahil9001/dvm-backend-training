@@ -16,7 +16,7 @@ To make sure you have openpyxl installed, you can run this command
 
 ### Running the game:
 
-Now, save the two files 'Facts.xlsx' and 'Fruity.py' on your computer **in the same folder/directory.** Now open your terminal and navigate to the that directory. The command for going to the directory for the ubuntu terminal looks like this:
+Now, save the two files 'Facts.xlsx' and 'Fruity.py' on your computer **in the same folder/directory.** Now open your terminal and navigate to that directory. The command for going to the directory for the ubuntu terminal looks like this:
 
 > cd home/user/directory
 
