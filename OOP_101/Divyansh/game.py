@@ -89,6 +89,7 @@ class Intro(Levels): #Level 1
 				print('''
 					You pick up the lighter but it doesn\'t work. Try something else!
 					''')
+				return 'intro'
 			
 			else:
 				print('You can\'t quite do that!')
@@ -379,8 +380,8 @@ class Map:			#Map of the whole game including all the levels
 	def opening_level(self):        #Runs the opening level
 		return self.go_to_level(self.starting_level)
 
-map = Map('intro')
-game = GameEngine(map)
+g_map = Map('intro')
+game = GameEngine(g_map)
 game.play() #Starts the game
 
 
