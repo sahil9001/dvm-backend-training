@@ -45,12 +45,13 @@ class Intro(Levels): #Level 1
 		print(Fore.RED + '** LEVEL 1 **', Style.RESET_ALL)
 		print(dedent('''
 					You find yourself in a small room with complete darkness. There is no power in the house.
-					At the moment, you have a video camera with nightvision mode and a desert eagle with 2 bullets.
-					You try to turn on the camera but it doesn't work. The batteries are dead!
-					In the room there's a wooden table with a drawer, a bookshelf and a TV. Also,there is
-					a bunch of random stuff scattered on the floor. To proceed, you need to have some sort of vision.
+					At the moment, you have a video camera with nightvision mode and a desert eagle with 2 
+					bullets. You try to turn on the camera but it doesn't work. The batteries are dead!
+					In the room there's a wooden table with a drawer, a bookshelf and a TV. Also, there is
+					a bunch of random stuff scattered on the floor. To proceed, you need to have some sort of
+					vision. 
 					'''))
-		print('What do you do to get batteries?')
+		print('What do you do to get batteries?(You can tinker with the stuff mentioned in the room)')
 		action = input('>')
 
 		bookshelf  = re.match(r'[a-zA-Z ]{0,}bookshelf[a-zA-Z]{0,}', action)
@@ -102,9 +103,7 @@ class Intro(Levels): #Level 1
 						'''))
 			return 'intro'
 		elif tv:
-			print('''
-				There is no power, you n00b. How can you turn on the tv? -_-
-				  ''')
+			print('There is no power, you n00b. How can you turn on the tv? -_-')
 			return 'intro'
 
 		else:
@@ -125,7 +124,7 @@ class Basement(Levels): #Level 2
 					you hear a loud and scary voice in the stairs that lead to the basement. It's the beast that 
 					lives in this house. The voice is getting louder. Pudge is coming to get you!
 					He is now roaming outside the generator room and you see him coming in the room.
-					What do you do now?
+					What do you do to avoid/get rid of him?
 					'''))
 
 		action = input('>')
@@ -236,6 +235,7 @@ class ControlRoom(Levels): #Level 4
 					'''))
 
 		password = randint(1,100)
+		print('answer:', password)
 		guess = int(input('Enter guess: '))
 		tries = 0
 
@@ -257,12 +257,11 @@ class ControlRoom(Levels): #Level 4
 						'''))
 			return 'last_task' #leads to Level 5(Final)
 		else:
-			print(dedent('''
-						OOPS!	
-						You couldn't guess the password correctly. Meanwhile, Pudge manages to break the 
-						lock and enter the control room. He breaks the computer and swallows you alive.
-						'''))
-			return 'death'
+			print('''
+					OOPS!
+					You couldn't guess the password correctly. Retry!
+				  ''')
+			return 'control_room'
 # **************************************************************************************************
 
 class LastTask(Levels): #Level 5(Final)
@@ -319,7 +318,7 @@ class Credits: #Displays credits after player wins the game
 					'''))
 # **************************************************************************************************
 
-class Death(Levels): #Handles what happens when user fails in the game
+class Death(Levels): #Handles what happens when player fails in the game
 	list_of_msgs = [
 					'Git gud and retry!',
 					'Better luck next time!',
@@ -337,6 +336,7 @@ class Death(Levels): #Handles what happens when user fails in the game
 		if action == 'y' or action == 'Y':
 			os.system('cls')
 			game.play()
+			
 		else:
 			exit(1)
 # **************************************************************************************************
