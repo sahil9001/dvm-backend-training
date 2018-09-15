@@ -83,7 +83,7 @@ class Intro(Levels): #Level 1
 						a computer that looks like a master computer of the house. But to power it up, you need to go to
 						the basement and reset the generator. Courageously, you decide to do that right away.
 					''')
-				return 'basement'
+				return 'basement' #leads to Level 2
 
 			elif lighter:
 				print('''
@@ -178,7 +178,7 @@ class Basement(Levels): #Level 2
 				''')
 			return 'death'
 
-		elif hide_under_bed: #leads to next level
+		elif hide_under_bed: #leads to Level 3
 			print('''
 				You quickly go under the bed and hide. Pudge is lazy enough to not check under the bed and you
 				safely avoid him when he enters the room. After a few minutes, he goes back. Now, you just have
@@ -208,7 +208,7 @@ class GeneratorReset(Levels): #Level 3
 						go back to the control room. But beware, Pudge may return because you still make 
 						little noises while going back.
 						'''))
-			return 'control_room'
+			return 'control_room' #leads to Level 4
 
 		elif guess == 73 or guess == 28: #incorrect choices
 			print('BZZZZZZ! Wrong choice! You set off the alarm. The beast quickly comes back and kills you.')
@@ -255,7 +255,7 @@ class ControlRoom(Levels): #Level 4
 						You use admin privileges to enable the high voltage shock wire on the control room door.
 						This zaps the beast and he is rendered motionless and finally falls to the ground.
 						'''))
-			return 'last_task'
+			return 'last_task' #leads to Level 5(Final)
 		else:
 			print(dedent('''
 						OOPS!	
@@ -303,7 +303,7 @@ class LastTask(Levels): #Level 5(Final)
 						Then, go to the tile at coordinate (4,2), turn it around and you'll find the key. 
 						Good game, well played!
 						'''))
-			return 'credits'
+			return 'credits' #Player wins the game
 		else:
 			print('Oops! You came close to obtaining the key but failed in the last task.')
 			return 'death'
