@@ -235,7 +235,6 @@ class ControlRoom(Levels): #Level 4
 					'''))
 
 		password = randint(1,100)
-		print('answer:', password)
 		guess = int(input('Enter guess: '))
 		tries = 0
 
