@@ -9,7 +9,7 @@ class scene(object):
         self.description=""
         self.opponent="no opponent is assigned to this scene "
         self.spell=""
-        self.opt_spell=['expelliarmus','winguardiumleviosa','aquamenti','alohomora','ascendio','finestra','stupify','difindo','incendio','avada_kedavra']
+        self.opt_spell=['expelliarmus','winguardiumleviosa','aquamenti','alohomora','ascendio','finestra','stupify','difindo','incendio','avada_kedavra','imperio']
         self.spell_set={'expelliarmus':"To unarm the other opponent",
                         'winguardiumleviosa':"Spell used for levitating objects",
                         'aquamenti':"Produces a fountain or jet of water from the wand tip",
@@ -19,7 +19,8 @@ class scene(object):
                         'stupify':"Ssed to make target unconcious",
                         'difindo':"Used to cut everything",
                         'incendio':"fire making Charm",
-                        'avada_kedavra':"To kill him....!!!"
+                        'avada_kedavra':"To kill him....!!!",
+                        'imperio':"to control others action"
                         }
 #dictionary to store the names and working of all the spells
 
