@@ -2,6 +2,7 @@ import time
 import json
 import requests
 import re
+import sys
 
 import os.path
 from os import path
@@ -108,7 +109,7 @@ class Person:
 
 
     def checkID(self): #Checks the validity of user entered values
-        matchid=re.search(r'^201[45678][ABD]\dPS\d\d\d\d[P]$',self.id)
+        matchid=re.search(r'^201[45678][ABD]\dPS\d\d\d\d[PT]$',self.id)
         if(matchid):
             return True
         else:
@@ -123,13 +124,13 @@ class Person:
             return False
 
     def checkHostelID(self):
-        matchHostelID=re.search(r'^[1-13]$',self.add)
+        matchHostelID=re.search(r'^[1-13]$',self.hostelID)
         if(matchHostelID):
             return True
         else:
             return False
 
-
+    
     def getHostel(self):
         print("""
             Please enter your hostel number from the list below.
@@ -149,7 +150,7 @@ class Person:
             13. Meera Bhawan
         """)
         self.hostelID=input()
-        while(self.checkHostelID==False):
+        while(self.checkHostelID()==False):
             self.hostelID=input("\n You have entered a invalid input. Please enter the correct hostel no.")
         self.add=hostelList[int(self.hostelID)]
         return
@@ -202,8 +203,8 @@ class Buyer(Person): #Buyer class inherits the contact details from the Person c
         if(path.exists('sellers_data.json')): #Check if file doesnt exist.
             pass
         else:
-            raise ValueError("There are not any sellers to display right now. Please check back later \n")
-
+            print("There are not any sellers to display right now. Please check back later \n")
+            sys.exit(0)
         with open("sellers_data.json","r") as sellerdata:
             data=json.load(sellerdata)
 
@@ -281,7 +282,7 @@ class Driver:
         c=input()
         if(c=='B' or c=='b'):
             user=Buyer()
-        elif(c=='S' or c=='s' ):
+        elif(c=='S' or c=='s'):
             user=Seller()
         else:
             raise ValueError("\n You can only enter B or S \n")
